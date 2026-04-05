@@ -2,7 +2,7 @@
 #include <cmath>
 #include <iomanip>
 
-double get_d(double x, double y) {
+double GetD(const double x, const double y) {
     const double denominator = x * (x - y) * (3 * x + y);
     if (std::abs(denominator) < 1e-9) {
         throw std::runtime_error("Деление на ноль.");
@@ -31,7 +31,7 @@ int main() {
     }
 
     try {
-        const double d = get_d(x, y);
+        const double d = GetD(x, y);
         std::cout << "d = " << std::fixed << std::setprecision(4) << d << '\n';
     } catch (std::runtime_error const &e) {
         std::cerr << e.what() << '\n';
