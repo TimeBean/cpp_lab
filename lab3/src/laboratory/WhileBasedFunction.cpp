@@ -1,10 +1,10 @@
-#include "../../include/laboratory1/WhileBasedFunction.h"
-#include "../../include/common/Result.h"
 #include <cmath>
+#include "../../include/laboratory/WhileBasedFunction.h"
+#include "../../include/common/Result.h"
 
-namespace Laboratory::FirstLaboratory {
-    std::vector<Common::Result<double> > WhileBasedFunction::Compute() {
-        auto result = std::vector<Common::Result<double> >();
+namespace Laboratory {
+    std::vector<Common::Result<double> > WhileBasedFunction::Compute() const {
+        auto result = std::vector<Laboratory::Common::Result<double> >();
 
         double x = A;
         double y;

@@ -1,11 +1,12 @@
 #pragma once
-#include "../common/Result.h"
-#include "../common/IFunction.h"
+#include <vector>
 
-namespace Laboratory::FirstLaboratory {
-    class WhileBasedFunction : public Common::IFunction {
+#include "../common/Result.h"
+
+namespace Laboratory {
+    class WhileBasedFunction {
     public:
-        std::vector<Common::Result<double> > Compute() override;
+        [[nodiscard]] std::vector<Common::Result<double> > Compute() const;
 
         WhileBasedFunction(const double a, const double b, const double step) {
             A = a;
@@ -13,7 +14,7 @@ namespace Laboratory::FirstLaboratory {
             STEP = step;
         }
 
-        ~WhileBasedFunction() override = default;
+        ~WhileBasedFunction() = default;
 
     private:
         double A;
