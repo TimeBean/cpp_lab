@@ -13,7 +13,7 @@ int main() {
     std::mt19937 rng(std::random_device{}());
     std::uniform_int_distribution dist(ELEMENT_MINIMUM_Z1, ELEMENT_MAXIMUM_Z2);
 
-    std::cout << "Дан массив (представлен в виде матрицы):" << std::endl;
+    std::cout << "Дан массив (представлен в виде матрицы):\n";
 
     std::array<int, ELEMENTS_COUNT_K> b{};
     int counter = 0;
