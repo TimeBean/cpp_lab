@@ -1,98 +1,100 @@
 #include <iomanip>
 #include <iostream>
+#include <memory>
 #include <vector>
 
-#include "include/common/FunctionType.h"
-#include "include/laboratory/WhileBasedFunction.h"
-#include "include/laboratory/DoWhileBasedFunction.h"
+#include "include/laboratory/WhileBasedFunction.cpp.h"
+#include "include/laboratory/DoWhileBasedFunction.cpp.h"
 #include "include/laboratory/ForBasedFunction.h"
-
-constexpr double FIRST_A = -3;
-constexpr double SECOND_A = 2.5;
-constexpr double B = 3;
-constexpr double STEP = 0.3;
-constexpr double DELTA_T = 0.5;
 
 constexpr size_t LEFT_OFFSET = 3;
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 void Clear() {
+#ifdef _WIN32
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    DWORD count;
+    DWORD cellCount;
+    COORD homeCoords = {0, 0};
+
+    if (hConsole == INVALID_HANDLE_VALUE) return;
+
+    if (!GetConsoleScreenBufferInfo(hConsole, &csbi)) return;
+    cellCount = csbi.dwSize.X * csbi.dwSize.Y;
+
+    FillConsoleOutputCharacter(hConsole, ' ', cellCount, homeCoords, &count);
+    FillConsoleOutputAttribute(hConsole, csbi.wAttributes, cellCount, homeCoords, &count);
+    SetConsoleCursorPosition(hConsole, homeCoords);
+#else
     std::cout << "\033[2J\033[H";
+#endif
 }
 
-void DisplayResult(const std::vector<Laboratory::Common::Result<double> >& results) {
+void WaitForEnter() {
+    std::cout << "Нажмите Enter, чтобы продолжить..." << std::flush;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.get();
+}
+
+void DisplayResult(const std::vector<Laboratory::Common::Result<double> > &results) {
     std::cout << std::string(LEFT_OFFSET, ' ') << "(x, y)\n";
     for (const auto &result: results) {
         std::cout << std::string(LEFT_OFFSET, ' ') << '(' << result.Input << ", " << result.Output << ")\n";
     }
-}
 
-void WaitForAnyUserInput() {
-    std::cout << "Нажмите Enter, чтобы продолжить...";
-    std::string dummy;
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::getline(std::cin, dummy);
-}
-
-void DisplayFunction(const Laboratory::Common::FunctionType functionType) {
-    using namespace Laboratory;
-    using Common::Result;
-
+    WaitForEnter();
     Clear();
+}
 
-    std::vector<Result<double> > results;
-    if (functionType == Common::ForBased) {
-        std::cout << "Выбран алгоритм на основе for.\n";
-        std::cout << "Введите значение x: ";
-        double x;
-        if (!(std::cin >> x)) {
-            std::cerr << "Введенная строка некорректна. Ожидалось число.\n";
-            throw std::runtime_error("Некорректный ввод числа.");
-        }
-        std::cout << "\n";
-        results = ForBasedFunction::Compute(x);
-    } else if (functionType == Common::DoWhileBased) {
-        std::cout << "Выбран алгоритм на основе do...while.\n\n";
-        results = WhileBasedFunction{FIRST_A, B, STEP}.Compute();
-    } else if (functionType == Common::WhileBased) {
-        std::cout << "Выбран алгоритм на основе while.\n\n";
-        results = DoWhileBasedFunction{SECOND_A, DELTA_T}.Compute();
+void DisplayMenu(const std::vector<std::unique_ptr<Laboratory::Functions::IFunction> > &functions) {
+    std::cout << "Лабораторная работа 3.\n\nДоступные варианты:\n";
+    for (size_t i = 0; i < functions.size(); ++i) {
+        std::cout << "   (" << functions[i]->GetKey() << ") "
+                << i + 1 << ". " << functions[i]->GetName() << "\n";
     }
-
-    DisplayResult(results);
-    std::cout << '\n';
-    WaitForAnyUserInput();
-    Clear();
+    std::cout << "   (q) 0. Выход\n";
 }
 
 int main() {
+    using namespace Laboratory::Functions;
+    std::vector<std::unique_ptr<IFunction> > functions;
+    functions.push_back(std::make_unique<Laboratory::WhileBasedFunction>());
+    functions.push_back(std::make_unique<Laboratory::DoWhileBasedFunction>());
+    functions.push_back(std::make_unique<Laboratory::ForBasedFunction>());
+
     Clear();
-
     while (true) {
-        std::cout << "Лабораторная работа 3.\n\n"
-                << "   Доступные варианты:\n"
-                << "      (w) 1. Задание 3.1 (На основе while)\n"
-                << "      (d) 2. Задание 3.2 (На основе do...while)\n"
-                << "      (f) 3. Задание 3.3 (На основе for)\n"
-                << "      (q) 0. Выход\n";
+        DisplayMenu(functions);
 
-        std::cout << "\nВыберите пункт: ";
-        std::string userInput;
-        std::cin >> userInput;
+        std::string input;
+        std::cin >> input;
 
-        if (userInput == "1" || userInput == "w") {
-            DisplayFunction(Laboratory::Common::WhileBased);
-        } else if (userInput == "2" || userInput == "d") {
-            DisplayFunction(Laboratory::Common::DoWhileBased);
-        } else if (userInput == "3" || userInput == "f") {
-            DisplayFunction(Laboratory::Common::ForBased);
-        } else if (userInput == "0" || userInput == "q") {
+        if (input == "0" || input == "q") {
             break;
-        } else {
+        }
+
+        const IFunction *selected = nullptr;
+        for (size_t i = 0; i < functions.size(); ++i) {
+            if (input == functions[i]->GetKey() || input == std::to_string(i + 1)) {
+                selected = functions[i].get();
+                break;
+            }
+        }
+
+        if (!selected) {
             std::cout << "Такого варианта нет.\n";
-            WaitForAnyUserInput();
+            continue;
         }
 
         Clear();
+        std::cout << selected->GetName() << '\n';
+        auto results = selected->Execute();
+
+        DisplayResult(results);
     }
 
     return 0;

@@ -1,14 +1,15 @@
 #include <cmath>
-#include "../../include/laboratory/WhileBasedFunction.h"
-#include "../../include/common/Result.h"
+#include <iostream>
+#include "../../include/laboratory/WhileBasedFunction.cpp.h"
 
 namespace Laboratory {
-    std::vector<Common::Result<double> > WhileBasedFunction::Compute() const {
-        auto result = std::vector<Laboratory::Common::Result<double> >();
 
-        double x = A;
+    inline std::vector<Common::Result<double>> WhileBasedFunction::Compute() {
+        auto result = std::vector<Common::Result<double> >();
+
+        double x = kA;
         double y;
-        while (x < B) {
+        while (x < kB) {
             if (x > 1) {
                 y = std::exp(x);
             } else if (x < 0) {
@@ -21,9 +22,13 @@ namespace Laboratory {
                 result.emplace_back(x, y);
             }
 
-            x += STEP;
+            x += kStep;
         }
 
         return result;
+    }
+
+    inline std::vector<Common::Result<double>> WhileBasedFunction::Execute() const {
+        return Compute();
     }
 }
