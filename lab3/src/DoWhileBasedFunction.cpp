@@ -1,9 +1,15 @@
+#include <vector>
 #include <cmath>
-#include "../../include/laboratory/DoWhileBasedFunction.cpp.h"
+#include "../include/Laboratory/DoWhileBasedFunction.h"
+#include "../include/Laboratory/utils/Result.h"
 
 namespace Laboratory {
-    std::vector<Common::Result<double> > DoWhileBasedFunction::Compute() {
-        auto result = std::vector<Common::Result<double> >();
+    std::vector<Result<double> > DoWhileBasedFunction::Execute() const noexcept {
+        return Compute();
+    }
+
+    std::vector<Result<double>> DoWhileBasedFunction::Compute() {
+        auto result = std::vector<Result<double> >();
 
         double t = 1;
         double y;
@@ -11,7 +17,7 @@ namespace Laboratory {
             if (t > kA) {
                 y = t * sqrt(t - kA);
             }
-            else if (t == kA) {
+            else if (std::abs(t - kA) < 1e-9) {
                 y = t * sin(kA * t);
             }
             else if (t < kA) {
@@ -23,9 +29,5 @@ namespace Laboratory {
         } while (t <= 5);
 
         return result;
-    }
-
-    std::vector<Common::Result<double>> DoWhileBasedFunction::Execute() const {
-        return Compute();
     }
 }

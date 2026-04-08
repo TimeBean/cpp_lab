@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Laboratory::Common {
+namespace Laboratory {
     template<typename T>
 
     struct Result {
@@ -12,4 +12,4 @@ namespace Laboratory::Common {
         T Input;
         T Output;
     };
-} // namespace Common
+}

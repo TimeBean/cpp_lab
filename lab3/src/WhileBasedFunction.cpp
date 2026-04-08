@@ -1,11 +1,15 @@
+#include <vector>
 #include <cmath>
-#include <iostream>
-#include "../../include/laboratory/WhileBasedFunction.cpp.h"
+#include "../include/Laboratory/WhileBasedFunction.h"
+#include "../include/Laboratory/utils/Result.h"
 
 namespace Laboratory {
+    std::vector<Result<double> > WhileBasedFunction::Execute() const noexcept {
+        return Compute();
+    }
 
-    inline std::vector<Common::Result<double>> WhileBasedFunction::Compute() {
-        auto result = std::vector<Common::Result<double> >();
+    std::vector<Result<double>> WhileBasedFunction::Compute()  {
+        auto result = std::vector<Result<double> >();
 
         double x = kA;
         double y;
@@ -26,9 +30,5 @@ namespace Laboratory {
         }
 
         return result;
-    }
-
-    inline std::vector<Common::Result<double>> WhileBasedFunction::Execute() const {
-        return Compute();
     }
 }
