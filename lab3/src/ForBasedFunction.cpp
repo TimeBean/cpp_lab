@@ -11,7 +11,7 @@ namespace Laboratory {
         std::vector<Result<double> > result;
 
         double sum = 0;
-        for (int n = 3; n <= 8; ++n) {
+        for (int n = 3; n <= 8; n++) {
             sum += std::exp(static_cast<double>(n)) * input * input
                     / static_cast<double>(2 * n + 1);
         }

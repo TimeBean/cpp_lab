@@ -53,12 +53,12 @@ int main() {
         std::string input;
         std::cin >> input;
 
-        if (input == "0" || input == "q") {
+        if (input == "0") {
             break;
         }
 
         const IFunction *selected = nullptr;
-        for (size_t i = 0; i < functions.size(); ++i) {
+        for (size_t i = 0; i < functions.size(); i++) {
             if (input == std::to_string(i + 1)) {
                 selected = functions[i].get();
                 break;
