@@ -5,7 +5,7 @@
 double GetD(const double x, const double y) {
     const double denominator = x * (x - y) * (3 * x + y);
     if (std::abs(denominator) < 1e-9) {
-        throw std::runtime_error("Деление на ноль.");
+        throw std::runtime_error("Division by zero.");
     }
 
     const double d = (x * exp(x * y) + 8 * sin(x) * sin(x)) /
@@ -16,17 +16,17 @@ double GetD(const double x, const double y) {
 
 int main() {
     //Тестовые значения: x = 1,002; y = -0.5321. Ожидается d = 1,6480.
-    std::cout << "Программа для вычисления формулы.\n";
+    std::cout << "A program for calculating a formula.\n";
 
     double x, y;
-    std::cout << "Введите x: ";
+    std::cout << "Enter x: ";
     if (!(std::cin >> x)) {
-        std::cerr << "Введенная строка некорректна. Ожидалось число.\n";
+        std::cerr << "The string you entered is invalid. A number was expected.\n";
         return 1;
     }
-    std::cout << "Введите y: ";
+    std::cout << "Enter y: ";
     if (!(std::cin >> y)) {
-        std::cerr << "Введенная строка некорректна. Ожидалось число.\n";
+        std::cerr << "The string you entered is invalid. A number was expected.\n";
         return 1;
     }
 

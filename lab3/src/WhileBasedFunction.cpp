@@ -11,9 +11,9 @@ namespace Laboratory {
     std::vector<Result<double>> WhileBasedFunction::Compute()  {
         auto result = std::vector<Result<double> >();
 
-        double x = kA;
+        double x = A;
         double y;
-        while (x < kB) {
+        while (x < B) {
             if (x > 1) {
                 y = std::exp(x);
             } else if (x < 0) {
@@ -26,7 +26,7 @@ namespace Laboratory {
                 result.emplace_back(x, y);
             }
 
-            x += kStep;
+            x += Step;
         }
 
         return result;

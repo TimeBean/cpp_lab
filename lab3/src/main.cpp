@@ -10,7 +10,7 @@
 constexpr int LEFT_OFFSET = 3;
 
 void WaitForEnter() {
-    std::cout << "Нажмите Enter, чтобы продолжить..." << std::flush;
+    std::cout << "Press Enter to continue..." << std::flush;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cin.get();
 }
@@ -24,14 +24,14 @@ void DisplayResult(const std::vector<Laboratory::Result<double> > &results) {
 }
 
 void DisplayMenu(const std::vector<std::unique_ptr<Laboratory::IFunction> > &functions) {
-    std::cout << "Лабораторная работа 3.\n\nДоступные варианты:\n";
+    std::cout << "Lab Assignment 3.\n\nAvailable options:\n";
 
     const auto offset = std::string(LEFT_OFFSET, ' ');
 
     for (size_t i = 0; i < functions.size(); ++i) {
         std::cout << offset << i + 1 << ". " << functions[i]->GetFunctionName() << "\n";
     }
-    std::cout << offset << "0. Выход\n";
+    std::cout << offset << "0. Exit\n";
 }
 
 
@@ -48,7 +48,7 @@ int main() {
     while (true) {
         DisplayMenu(functions);
 
-        std::cout << "\nВыберите вариант: ";
+        std::cout << "\nSelect an option: ";
 
         std::string input;
         std::cin >> input;
@@ -66,7 +66,7 @@ int main() {
         }
 
         if (!selected) {
-            std::cout << "Такого варианта нет.\n";
+            std::cout << "There is no such option.\n";
             continue;
         }
 

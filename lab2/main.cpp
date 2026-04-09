@@ -6,10 +6,10 @@ constexpr double B = 2.6;
 constexpr double D = 4.2;
 
 int main() {
-    std::cout << "Программа для вычисления функции.\n";
+    std::cout << "A program for calculating a function.\n";
 
     std::string IsCVariableGreaterThanZero;
-    std::cout << "Коэффициент C больше нуля? [Y/n] ";
+    std::cout << "Is coefficient C greater than zero? [Y/n] ";
     std::getline(std::cin, IsCVariableGreaterThanZero);
     double C;
     if (IsCVariableGreaterThanZero.empty() || IsCVariableGreaterThanZero == "Y" || IsCVariableGreaterThanZero == "y") {
@@ -21,9 +21,9 @@ int main() {
     std::cout << "С = " << C << '\n';
 
     double x;
-    std::cout << "Введите x: ";
+    std::cout << "Enter x: ";
     if (!(std::cin >> x)) {
-        std::cerr << "Введенная строка некорректна. Ожидалось число.\n";
+        std::cerr << "The string you entered is invalid. A number was expected.\n";
         return 1;
     }
 

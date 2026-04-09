@@ -13,7 +13,7 @@ int main() {
     std::mt19937 rng(std::random_device{}());
     std::uniform_int_distribution dist(ELEMENT_MINIMUM_Z1, ELEMENT_MAXIMUM_Z2);
 
-    std::cout << "Дан массив (представлен в виде матрицы):\n";
+    std::cout << "Here is an array (represented as a matrix):\n";
 
     std::array<int, ELEMENTS_COUNT_K> b{};
     int counter = 0;
@@ -39,9 +39,9 @@ int main() {
         sum += element;
     }
 
-    std::cout << "\nДанные для элементов меньше -10 или больше 30:\n";
-    std::cout << "Количество: " << count << '\n';
-    std::cout << "Сумма: " << sum << '\n';
+    std::cout << "\nData for elements less than -10 or greater than 30:\n";
+    std::cout << "Quantity: " << count << '\n';
+    std::cout << "Sum: " << sum << '\n';
 
     return 0;
 }

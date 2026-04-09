@@ -14,18 +14,18 @@ namespace Laboratory {
         double t = 1;
         double y;
         do {
-            if (t > kA) {
-                y = t * sqrt(t - kA);
+            if (t > A) {
+                y = t * sqrt(t - A);
             }
-            else if (std::abs(t - kA) < 1e-9) {
-                y = t * sin(kA * t);
+            else if (std::abs(t - A) < 1e-9) {
+                y = t * sin(A * t);
             }
-            else if (t < kA) {
-                y = exp(-kA * t) * cos(kA * t);
+            else if (t < A) {
+                y = exp(-A * t) * cos(A * t);
             }
 
             result.emplace_back(t, y);
-            t += kDeltaT;
+            t += DeltaT;
         } while (t <= 5);
 
         return result;

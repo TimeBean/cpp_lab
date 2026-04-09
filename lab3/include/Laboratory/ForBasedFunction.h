@@ -5,7 +5,7 @@ namespace Laboratory {
     class ForBasedFunction final : public IFunction {
     public:
         [[nodiscard]] std::string GetFunctionName() const noexcept override {
-            return "Задание 3.3 (на основе for)";
+            return "Exercise 3.3 (using `for`)";
         }
 
         [[nodiscard]] std::vector<Result<double> > Execute() const override;
