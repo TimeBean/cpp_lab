@@ -8,11 +8,11 @@ constexpr double D = 4.2;
 int main() {
     std::cout << "A program for calculating a function.\n";
 
-    std::string IsCVariableGreaterThanZero;
+    std::string isVariableCGreaterThanZero;
     std::cout << "Is coefficient C greater than zero? [Y/n] ";
-    std::getline(std::cin, IsCVariableGreaterThanZero);
+    std::getline(std::cin, isVariableCGreaterThanZero);
     double C;
-    if (IsCVariableGreaterThanZero.empty() || IsCVariableGreaterThanZero == "Y" || IsCVariableGreaterThanZero == "y") {
+    if (isVariableCGreaterThanZero.empty() || isVariableCGreaterThanZero == "Y" || isVariableCGreaterThanZero == "y") {
         C = 3.1;
     } else {
         C = -3.1;
