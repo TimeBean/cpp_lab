@@ -11,14 +11,14 @@ int main() {
     std::string isVariableCGreaterThanZero;
     std::cout << "Is coefficient C greater than zero? [Y/n] ";
     std::getline(std::cin, isVariableCGreaterThanZero);
-    double C;
+    double c;
     if (isVariableCGreaterThanZero.empty() || isVariableCGreaterThanZero == "Y" || isVariableCGreaterThanZero == "y") {
-        C = 3.1;
+        c = 3.1;
     } else {
-        C = -3.1;
+        c = -3.1;
     }
 
-    std::cout << "С = " << C << '\n';
+    std::cout << "С = " << c << '\n';
 
     double x;
     std::cout << "Enter x: ";
@@ -28,15 +28,15 @@ int main() {
     }
 
     double z;
-    if (C > 0 && x > 2) {
-        z = std::max(std::max(C, x / C), sin(C));
-    } else if (C < 0 && x > 2) {
-        const double t1 = C * x + sin(B);
-        const double t2 = std::max(C, B);
-        const double t3 = std::min(C, t1);
+    if (c > 0 && x > 2) {
+        z = std::max(std::max(c, x / c), sin(c));
+    } else if (c < 0 && x > 2) {
+        const double t1 = c * x + sin(B);
+        const double t2 = std::max(c, B);
+        const double t3 = std::min(c, t1);
         z = std::min(t3, t2);
     } else {
-        z = std::max(C, B);
+        z = std::max(c, B);
     }
     std::cout << "Z = " << z << '\n';
 
